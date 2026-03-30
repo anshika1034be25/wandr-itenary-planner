@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wandr — Itinerary Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="bhoww.css" />
+</head>
+<body>
+
+  <!-- ✦ Toast Notification Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ✦ Background Orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- ✦ Header / Navbar -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">wandr</span>
+      </div>
+      <nav class="header-actions">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search plans..."
+            aria-label="Search itinerary items"
+          />
+        </div>
+        <!-- Dark/Light mode toggle -->
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+          <span class="theme-icon" id="theme-icon">☽</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ✦ Main Content -->
+  <main class="main-content">
+
+    <!-- Hero Section -->
+    <section class="hero" aria-label="Page introduction">
+      <p class="hero-eyebrow">your world, planned</p>
+      <h1 class="hero-title">
+        Drop your next<br />
+        <em>adventure</em> here.
+      </h1>
+      <p class="hero-sub">Add destinations, dates & vibes — all in one glassy spot.</p>
+    </section>
+
+    <!-- Filter Category Pills -->
+    <section class="filter-bar" aria-label="Filter by category">
+      <div class="filter-pills" id="filter-pills" role="group" aria-label="Category filters">
+        <button class="pill pill-active" data-filter="all">✦ All</button>
+        <button class="pill" data-filter="travel">✈ Travel</button>
+        <button class="pill" data-filter="food">🍜 Food</button>
+        <button class="pill" data-filter="stay">🏨 Stay</button>
+        <button class="pill" data-filter="activity">🎭 Activity</button>
+        <button class="pill" data-filter="shopping">🛍 Shopping</button>
+        <button class="pill" data-filter="other">◎ Other</button>
+      </div>
+    </section>
+
+    <!-- Add Button Trigger -->
+    <div class="add-trigger-row">
+      <button class="btn-add-trigger" id="open-modal-btn" aria-haspopup="dialog">
+        <span class="plus-icon">+</span>
+        <span>New Plan</span>
+      </button>
+      <p class="plan-count" id="plan-count"></p>
+    </div>
+
+    <!-- ✦ Cards Grid -->
+    <section class="cards-grid" id="cards-grid" aria-label="Itinerary cards">
+      <!-- Cards rendered by JS -->
+    </section>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state" hidden aria-live="polite">
+      <div class="empty-icon" aria-hidden="true">🗺️</div>
+      <h2 class="empty-title">No plans yet</h2>
+      <p class="empty-sub">Your next adventure is one click away. Add a plan to get started.</p>
+      <button class="btn-empty" id="empty-add-btn">+ Add your first plan</button>
+    </div>
+
+  </main>
+
+  <!-- ✦ Modal Overlay -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">New Plan</h2>
+        <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
+      </div>
+
+      <form class="modal-form" id="itinerary-form" novalidate>
+        <!-- Hidden ID for edit mode -->
+        <input type="hidden" id="edit-id" />
+
+        <div class="form-row">
+          <label class="form-label" for="destination">Destination *</label>
+          <input
+            class="form-input"
+            type="text"
+            id="destination"
+            placeholder="e.g. Kyoto, Japan"
+            required
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-row two-col">
+          <div>
+            <label class="form-label" for="start-date">From</label>
+            <input class="form-input" type="date" id="start-date" />
+          </div>
+          <div>
+            <label class="form-label" for="end-date">To</label>
+            <input class="form-input" type="date" id="end-date" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="category">Category</label>
+          <select class="form-input form-select" id="category">
+            <option value="travel">✈ Travel</option>
+            <option value="food">🍜 Food</option>
+            <option value="stay">🏨 Stay</option>
+            <option value="activity">🎭 Activity</option>
+            <option value="shopping">🛍 Shopping</option>
+            <option value="other">◎ Other</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="notes">Notes / Vibes</label>
+          <textarea
+            class="form-input form-textarea"
+            id="notes"
+            placeholder="What's the plan? Any must-dos, bookings, or vibe checks..."
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" id="cancel-btn">Cancel</button>
+          <button type="submit" class="btn-save" id="save-btn">Save Plan ✦</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✦ Footer -->
+  <footer class="site-footer">
+    <p>made with <span class="heart">♥</span> for explorers everywhere · wandr © 2025</p>
+  </footer>
+
+  <script src="khekhe.js"></script>
+</body>
+</html>
