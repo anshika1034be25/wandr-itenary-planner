@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,130 +11,101 @@
 </head>
 <body>
 
-  <!-- ✦ Toast Notification Container -->
-  <div id="toast-container" aria-live="polite"></div>
+  <div id="notificationArea" aria-live="polite"></div>
 
-  <!-- ✦ Background Orbs -->
-  <div class="bg-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <div class="backgroundOrbs" aria-hidden="true">
+    <div class="glowOrb glowOrb1"></div>
+    <div class="glowOrb glowOrb2"></div>
+    <div class="glowOrb glowOrb3"></div>
   </div>
 
-  <!-- ✦ Header / Navbar -->
-  <header class="site-header">
-    <div class="header-inner">
+  <header class="siteHeader">
+    <div class="headerWrapper">
       <div class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">wandr</span>
+        <span class="logoIcon">✦</span>
+        <span class="logoText">wandr</span>
       </div>
-      <nav class="header-actions">
-        <div class="search-wrap">
-          <span class="search-icon">⌕</span>
-          <input
-            type="search"
-            id="search-input"
-            class="search-input"
-            placeholder="Search plans..."
-            aria-label="Search itinerary items"
-          />
+      <nav class="headerControls">
+        <div class="searchWrapper">
+          <span class="searchIcon">⌕</span>
+          <input type="search" id="searchField" class="searchBox" placeholder="Search plans..." aria-label="Search itinerary items" />
         </div>
-        <!-- Dark/Light mode toggle -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
-          <span class="theme-icon" id="theme-icon">☽</span>
+        <button class="darkModeToggle" id="themeToggleButton" aria-label="Toggle theme" title="Toggle dark/light mode">
+          <span class="themeIcon">☽</span>
         </button>
       </nav>
     </div>
   </header>
 
-  <!-- ✦ Main Content -->
-  <main class="main-content">
+  <main class="mainContainer">
 
-    <!-- Hero Section -->
     <section class="hero" aria-label="Page introduction">
-      <p class="hero-eyebrow">your world, planned</p>
-      <h1 class="hero-title">
+      <p class="heroEyebrow">your world, planned</p>
+      <h1 class="heroTitle">
         Drop your next<br />
         <em>adventure</em> here.
       </h1>
-      <p class="hero-sub">Add destinations, dates & vibes — all in one glassy spot.</p>
+      <p class="heroSub">Add destinations, dates & vibes — all in one glassy spot.</p>
     </section>
 
-    <!-- Filter Category Pills -->
-    <section class="filter-bar" aria-label="Filter by category">
-      <div class="filter-pills" id="filter-pills" role="group" aria-label="Category filters">
-        <button class="pill pill-active" data-filter="all">✦ All</button>
-        <button class="pill" data-filter="travel">✈ Travel</button>
-        <button class="pill" data-filter="food">🍜 Food</button>
-        <button class="pill" data-filter="stay">🏨 Stay</button>
-        <button class="pill" data-filter="activity">🎭 Activity</button>
-        <button class="pill" data-filter="shopping">🛍 Shopping</button>
-        <button class="pill" data-filter="other">◎ Other</button>
+    <section class="filterSection" aria-label="Filter by category">
+      <div class="filterGroup" id="filterGroupContainer" role="group" aria-label="Category filters">
+        <button class="filterChip filterChipActive" data-filter="all">✦ All</button>
+        <button class="filterChip" data-filter="travel">✈ Travel</button>
+        <button class="filterChip" data-filter="food">🍜 Food</button>
+        <button class="filterChip" data-filter="stay">🏨 Stay</button>
+        <button class="filterChip" data-filter="activity">🎭 Activity</button>
+        <button class="filterChip" data-filter="shopping">🛍 Shopping</button>
+        <button class="filterChip" data-filter="other">◎ Other</button>
       </div>
     </section>
 
-    <!-- Add Button Trigger -->
-    <div class="add-trigger-row">
-      <button class="btn-add-trigger" id="open-modal-btn" aria-haspopup="dialog">
-        <span class="plus-icon">+</span>
+    <div class="actionBar">
+      <button class="primaryButton" id="addPlanButton" aria-haspopup="dialog">
+        <span class="plusSign">+</span>
         <span>New Plan</span>
       </button>
-      <p class="plan-count" id="plan-count"></p>
+      <p class="planStats" id="planCounter"></p>
     </div>
 
-    <!-- ✦ Cards Grid -->
-    <section class="cards-grid" id="cards-grid" aria-label="Itinerary cards">
-      <!-- Cards rendered by JS -->
-    </section>
+    <section class="planGrid" id="planGrid" aria-label="Itinerary cards"></section>
 
-    <!-- Empty State -->
-    <div class="empty-state" id="empty-state" hidden aria-live="polite">
-      <div class="empty-icon" aria-hidden="true">🗺️</div>
-      <h2 class="empty-title">No plans yet</h2>
-      <p class="empty-sub">Your next adventure is one click away. Add a plan to get started.</p>
-      <button class="btn-empty" id="empty-add-btn">+ Add your first plan</button>
+    <div class="emptyMessage" id="emptyStateMsg" hidden aria-live="polite">
+      <div class="emptyIcon" aria-hidden="true">🗺️</div>
+      <h2 class="emptyHeading">No plans yet</h2>
+      <p class="emptyText">Your next adventure is one click away. Add a plan to get started.</p>
+      <button class="emptyActionButton" id="emptyAddButton">+ Add your first plan</button>
     </div>
 
   </main>
 
-  <!-- ✦ Modal Overlay -->
-  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
-    <div class="modal-card">
-      <div class="modal-header">
-        <h2 class="modal-title" id="modal-title">New Plan</h2>
-        <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
+  <div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modalContainer">
+      <div class="modalHeader">
+        <h2 class="modalHeading" id="modalTitle">New Plan</h2>
+        <button class="modalCloseButton" id="closeModalButton" aria-label="Close modal">✕</button>
       </div>
 
-      <form class="modal-form" id="itinerary-form" novalidate>
-        <!-- Hidden ID for edit mode -->
-        <input type="hidden" id="edit-id" />
-
-        <div class="form-row">
-          <label class="form-label" for="destination">Destination *</label>
-          <input
-            class="form-input"
-            type="text"
-            id="destination"
-            placeholder="e.g. Kyoto, Japan"
-            required
-            autocomplete="off"
-          />
+      <form class="modalForm" id="planForm" novalidate>
+        <div class="formField">
+          <label class="fieldLabel" for="destInput">Destination *</label>
+          <input class="fieldInput" type="text" id="destInput" placeholder="e.g. Kyoto, Japan" required autocomplete="off" />
         </div>
 
-        <div class="form-row two-col">
+        <div class="formField twoColumnLayout">
           <div>
-            <label class="form-label" for="start-date">From</label>
-            <input class="form-input" type="date" id="start-date" />
+            <label class="fieldLabel" for="startDateInput">From</label>
+            <input class="fieldInput" type="date" id="startDateInput" />
           </div>
           <div>
-            <label class="form-label" for="end-date">To</label>
-            <input class="form-input" type="date" id="end-date" />
+            <label class="fieldLabel" for="endDateInput">To</label>
+            <input class="fieldInput" type="date" id="endDateInput" />
           </div>
         </div>
 
-        <div class="form-row">
-          <label class="form-label" for="category">Category</label>
-          <select class="form-input form-select" id="category">
+        <div class="formField">
+          <label class="fieldLabel" for="categorySelect">Category</label>
+          <select class="fieldInput fieldSelect" id="categorySelect">
             <option value="travel">✈ Travel</option>
             <option value="food">🍜 Food</option>
             <option value="stay">🏨 Stay</option>
@@ -144,26 +115,20 @@
           </select>
         </div>
 
-        <div class="form-row">
-          <label class="form-label" for="notes">Notes / Vibes</label>
-          <textarea
-            class="form-input form-textarea"
-            id="notes"
-            placeholder="What's the plan? Any must-dos, bookings, or vibe checks..."
-            rows="3"
-          ></textarea>
+        <div class="formField">
+          <label class="fieldLabel" for="notesInput">Notes / Vibes</label>
+          <textarea class="fieldInput fieldTextarea" id="notesInput" placeholder="What's the plan? Any must-dos, bookings, or vibe checks..." rows="3"></textarea>
         </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" id="cancel-btn">Cancel</button>
-          <button type="submit" class="btn-save" id="save-btn">Save Plan ✦</button>
+        <div class="formButtons">
+          <button type="button" class="cancelButton" id="cancelFormButton">Cancel</button>
+          <button type="submit" class="saveButton" id="saveBtn">Save Plan ✦</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ✦ Footer -->
-  <footer class="site-footer">
+  <footer class="siteFooter">
     <p>made with <span class="heart">♥</span> for explorers everywhere · wandr © 2025</p>
   </footer>
 
